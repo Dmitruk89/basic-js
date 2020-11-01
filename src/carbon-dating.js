@@ -1,21 +1,16 @@
 const MODERN_ACTIVITY= 15; 
 const HALF_LIFE_PERIOD= 5730;
+const HALF_LIFE_COEFFICIENT= .693;
 
 module.exports = function dateSample(sampleActivity) {
-  if (typeof Number(sampleActivity) !== "number"){
-    return false;
-  }
 
-  if(!sampleActivity || sampleActivity <= 0 || sampleActivity > 15 || typeof sampleActivity !== "string"){
-    return false
+const sampleNumber = Number.parseFloat(sampleActivity);
+  if (typeof (sampleActivity) === 'string'
+    && sampleNumber > 0
+    && sampleNumber <= MODERN_ACTIVITY) {
+    return Math.ceil(Math.log(MODERN_ACTIVITY / sampleNumber) * (HALF_LIFE_PERIOD / HALF_LIFE_COEFFICIENT));
   }
-  sampleActivity = Number(sampleActivity);
-  
-   console.log (sampleActivity); 
- let k = 0.693/HALF_LIFE_PERIOD;
- let t = (Math.log(MODERN_ACTIVITY / sampleActivity))/k;
+  return false;
 
-t = Math.floor(t) + 1;
-return t
  
 };
